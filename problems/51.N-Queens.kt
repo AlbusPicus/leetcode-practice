@@ -9,12 +9,11 @@ class Solution {
         blockedRows: Set<Int>,
         leftBlockedCells: Set<Int>,
         rightBlockedCells: Set<Int>
-    ): List<List<String>> {
-        var result = mutableListOf<List<String>>()
+    ): List<LinkedList<String>> {
+        var result = mutableListOf<LinkedList<String>>()
         for (columnIndex in 0 until boardSize) {
             val isAvailableIndex = isAvailableIndex(columnIndex, blockedRows, leftBlockedCells, rightBlockedCells)
             if (isAvailableIndex) {
-                var successPaths = emptyList<List<String>>()
                 if (lineToSearch < boardSize - 1) {
                     val nextLevelLeftBlockedCells = generateBlockedCellsForNextLine(
                         leftBlockedCells,
@@ -29,7 +28,7 @@ class Solution {
                     
                     val nextLevelBlockedRows = blockedRows + columnIndex
                     
-                    successPaths = placeQueens(
+                    val successPaths = placeQueens(
                         boardSize, 
                         lineToSearch + 1, 
                         nextLevelBlockedRows,
@@ -39,9 +38,8 @@ class Solution {
                     
                     appendResultToList(boardSize, columnIndex, result, successPaths)
                 } else {
-                    val rowAsList = mutableListOf<String>(
-                        getCurrentRowString(boardSize, columnIndex)
-                    )
+                    val rowAsList = LinkedList<String>()
+                    rowAsList.add(getCurrentRowString(boardSize, columnIndex))
                     result.add(rowAsList)
                 }
                 
@@ -80,16 +78,15 @@ class Solution {
     fun appendResultToList(
         boardSize: Int,
         columnIndex: Int,
-        resultsList: MutableList<List<String>>, 
-        successPaths: List<List<String>>
+        resultsList: MutableList<LinkedList<String>>, 
+        successPaths: List<LinkedList<String>>
     ) {
         if (successPaths.isNotEmpty()) {
             val currentRow = getCurrentRowString(boardSize, columnIndex)
             successPaths.forEach { path ->
-                val result = mutableListOf(currentRow) 
-                result.addAll(path)
-                resultsList.add(result)
+                path.addFirst(currentRow)
             }
+            resultsList.addAll(successPaths)
         }
     }
     
