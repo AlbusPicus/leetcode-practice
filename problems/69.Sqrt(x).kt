@@ -19,35 +19,22 @@ class Solution {
             maxValue = maxValue * 10 + 9
         }
         
-        maxValue = correctMaxValue(maxValue)
-        
-        var middleValue = (minValue + maxValue) / 2
-        var currentSquare = 0
+        var middleValue = (minValue + maxValue + 1) / 2
+        var dividedNumber = 0
         
         while (minValue < maxValue) {
-            currentSquare = middleValue * middleValue
-            if (currentSquare < x && minValue != middleValue) {
+            dividedNumber = x / middleValue
+            if (dividedNumber > middleValue && minValue != middleValue) {
                 minValue = middleValue
-            } else if (currentSquare > x && maxValue != middleValue) {
+            } else if (dividedNumber < middleValue && maxValue != middleValue) {
                 maxValue = middleValue
             } else {
                 minValue = middleValue
                 maxValue = middleValue
             }
             middleValue = (minValue + maxValue + 1) / 2
-            
-            
         }
-        return if (middleValue * middleValue > x) (middleValue - 1) else middleValue
+        return if (x / middleValue < middleValue) (middleValue - 1) else middleValue
     }
     
-    fun correctMaxValue(maxValue: Int): Int {
-        return if (maxValue > MAX_INTEGER_SQUARE_ROOT) {
-            MAX_INTEGER_SQUARE_ROOT
-        } else maxValue
-    }
-    
-    companion object {
-        private const val MAX_INTEGER_SQUARE_ROOT = 46340
-    }
 }
