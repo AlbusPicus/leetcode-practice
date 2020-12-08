@@ -1,54 +1,89 @@
 /**
- * Runtime: 1900 ms, faster than 25.00% of Kotlin online submissions for Detect Cycles in 2D Grid.
- * Memory Usage: 154 MB, less than 25.00% of Kotlin online submissions for Detect Cycles in 2D Grid.
+ * Runtime: 1604 ms, faster than 25.00% of Kotlin online submissions for Detect Cycles in 2D Grid.
+ * Memory Usage: 149.8 MB, less than 25.00% of Kotlin online submissions for Detect Cycles in 2D Grid.
  */
 
 class Solution {
     fun containsCycle(grid: Array<CharArray>): Boolean {
+        val visitedPoints = mutableSetOf<Point>()
+        var currentlyVisitedPoints = mutableSetOf<Point>()
+        val currentCharItemsToVisit = LinkedList<Point>().apply { addLast(Point(0, 0)) }
+        val nextCharItemsToVisit = LinkedList<Point>()
+        var point: Point
+        var hasCycle = false
+        var switchToNextChar = false
+        
+        while (!hasCycle && (currentCharItemsToVisit.isNotEmpty() || nextCharItemsToVisit.isNotEmpty())) {
+            switchToNextChar = currentCharItemsToVisit.isEmpty()
+            point = if (switchToNextChar) nextCharItemsToVisit.pollLast() else currentCharItemsToVisit.pollLast()
+            if (point !in visitedPoints) {
+                if (switchToNextChar) {
+                    currentlyVisitedPoints.clear()
+                }
+                currentlyVisitedPoints.add(point)
+
+                visitedPoints.add(point)
+                val cycleDetected = scheduleAdjacentPointsTraversal(
+                    point, 
+                    visitedPoints,
+                    currentlyVisitedPoints,
+                    grid, 
+                    currentCharItemsToVisit,
+                    nextCharItemsToVisit
+                )
+                hasCycle = hasCycle || cycleDetected
+                if (hasCycle) break
+            }
+            
+        }
+        
+        return hasCycle
+        
+    }
+    
+    /**
+     * Creates adjacent points.
+     * Puts valid adjucent points to the corresponding list based on the value in that point
+     * @returns true if any of the valid points were already visited during this continious traversal, false - otherwise
+     */
+    fun scheduleAdjacentPointsTraversal(
+        point: Point, 
+        visitedPoints: Set<Point>, 
+        currentlyVisitedItemsSet: Set<Point>,
+        grid: Array<CharArray>, 
+        currentCharItemsToVisit: LinkedList<Point>, 
+        nextCharItemsToVisit: LinkedList<Point>
+    ): Boolean {
         val gridHeight = grid.size
         val gridWidth = grid[0].size
-        val visitedSet = mutableSetOf<Point>()
-        val itemsToVisit = LinkedList<Point>().apply { addLast(Point(0, 0)) }
-        val nextIterationItemsToVisit = LinkedList<Point>()
-        var currentChar: Char = grid[0][0]
-        var item: Point
-        var currentlyVisitedItemsSet = mutableSetOf<Point>()
-        while (itemsToVisit.isNotEmpty() || nextIterationItemsToVisit.isNotEmpty()) {
-            val nextCycle = itemsToVisit.isEmpty()
-            item = if (nextCycle) nextIterationItemsToVisit.pollLast() else itemsToVisit.pollLast()
-            visitedSet.add(item)
-            val itemChar = grid[item.x][item.y]
-            if (nextCycle) {
-                currentlyVisitedItemsSet.clear()
-                currentChar = itemChar
-            } else {
-                currentlyVisitedItemsSet.add(item)
-            }
-            item.directions.forEach { direction ->
-                val directionsTemplate = EnumSet.allOf(Directions::class.java)
-                val newItem = when (direction) {
-                    Directions.LEFT -> Point(item.x, item.y - 1, directionsTemplate.apply { remove (Directions.RIGHT) })
-                    Directions.TOP -> Point(item.x - 1, item.y, directionsTemplate.apply { remove (Directions.BOTTOM) })
-                    Directions.RIGHT -> Point(item.x, item.y + 1, directionsTemplate.apply { remove (Directions.LEFT) })
-                    Directions.BOTTOM -> Point(item.x + 1, item.y, directionsTemplate.apply { remove (Directions.TOP) })
-                }
-                if (newItem.isValid(gridHeight, gridWidth)) {
-                    val isSameChar = grid[newItem.x][newItem.y] == currentChar
-                    if (newItem !in visitedSet) {
-                        if (isSameChar) {
-                            itemsToVisit.addLast(newItem)
-                        } else {
-                            nextIterationItemsToVisit.addLast(newItem)
-                        }
-                    } else if (isSameChar && newItem in currentlyVisitedItemsSet) {
-                        return true
+        val currentChar = grid[point.x][point.y]
+        var hasAlreadyVisitedPoint = false
+        point.directions.forEach { direction ->
+            val adjacentPoint = createAdjacentPoint(point, direction)
+            if (adjacentPoint.isValid(gridHeight, gridWidth)) {
+                if (adjacentPoint !in visitedPoints) {
+                    val isSameChar = grid[adjacentPoint.x][adjacentPoint.y] == currentChar
+                    if (isSameChar) {
+                        currentCharItemsToVisit.addLast(adjacentPoint)
+                    } else {
+                        nextCharItemsToVisit.addLast(adjacentPoint)
                     }
+                } else if (adjacentPoint in currentlyVisitedItemsSet) {
+                    hasAlreadyVisitedPoint = true
                 }
             }
         }
-        
-        return false
-        
+        return hasAlreadyVisitedPoint
+    }
+    
+    fun createAdjacentPoint(point: Point, direction: Directions): Point {
+        val directionsTemplate = EnumSet.allOf(Directions::class.java)
+        return when (direction) {
+            Directions.LEFT -> Point(point.x, point.y - 1, directionsTemplate.apply { remove (Directions.RIGHT) })
+            Directions.TOP -> Point(point.x - 1, point.y, directionsTemplate.apply { remove (Directions.BOTTOM) })
+            Directions.RIGHT -> Point(point.x, point.y + 1, directionsTemplate.apply { remove (Directions.LEFT) })
+            Directions.BOTTOM -> Point(point.x + 1, point.y, directionsTemplate.apply { remove (Directions.TOP) })
+        }
     }
     
     data class Point(val x: Int, val y: Int) {
