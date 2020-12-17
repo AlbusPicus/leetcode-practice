@@ -1,6 +1,6 @@
 /**
- * Runtime: 388 ms, faster than 50.00% of Kotlin online submissions for Jump Game V.
- * Memory Usage: 37.4 MB, less than 50.00% of Kotlin online submissions for Jump Game V.
+ * Runtime: 220 ms, faster than 50.00% of Kotlin online submissions for Jump Game V.
+ * Memory Usage: 37 MB, less than 50.00% of Kotlin online submissions for Jump Game V.
  */
 
 class Solution {
@@ -20,18 +20,21 @@ class Solution {
         }
         
         val currentHeight = heights[startPosition]
-        val startIndex = Math.max(0, startPosition - maxDistance)
-        val endIndex = Math.min(heights.size - 1, startPosition + maxDistance)
+        val leftIndex = Math.max(0, startPosition - maxDistance)
+        val rightIndex = Math.min(heights.size - 1, startPosition + maxDistance)
         var maxIndexesVisited = 1
-        for (i in startIndex .. endIndex) {
-            if (i != startPosition) {
-                if (heights[i] < currentHeight) {
-                    maxIndexesVisited = Math.max(maxIndexesVisited, getMaxmaxIndexesVisited(heights, i, maxDistance, memo) + 1)
-                } else if (i < startPosition) {
-                    maxIndexesVisited = 1
-                } else {
-                    break
-                }
+        for (i in startPosition - 1 downTo leftIndex) {
+            if (heights[i] < currentHeight) {
+                maxIndexesVisited = Math.max(maxIndexesVisited, getMaxmaxIndexesVisited(heights, i, maxDistance, memo) + 1)
+            } else {
+                break
+            }
+        }
+        for (i in startPosition + 1 .. rightIndex) {
+            if (heights[i] < currentHeight) {
+                maxIndexesVisited = Math.max(maxIndexesVisited, getMaxmaxIndexesVisited(heights, i, maxDistance, memo) + 1)
+            } else {
+                break
             }
         }
         
