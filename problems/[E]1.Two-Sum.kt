@@ -1,3 +1,8 @@
+
+/**
+ * Runtime: 164 ms, faster than 98.92% of Kotlin online submissions for Two Sum.
+ * Memory Usage: 36.9 MB, less than 56.61% of Kotlin online submissions for Two Sum.
+ */
 class Solution {
     fun twoSum(nums: IntArray, target: Int): IntArray {
         val numsSize = nums.size
