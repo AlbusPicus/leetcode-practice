@@ -29,10 +29,10 @@ class Solution {
                     val secondPoint = startingPoints[j]
                     val startingPoint = getVectorStartingPoint(firstPoint, secondPoint)
                     val secondVector = getVector(firstPoint, secondPoint)
-                    val complementingPoint = if (vector != secondVector && isRightAngle(vector, secondVector)) {
+                    val complementaryPoint = if (vector != secondVector && isRightAngle(vector, secondVector)) {
                         Point(startingPoint[0] + vector.x, startingPoint[1] + vector.y)
                     } else null
-                    if (complementingPoint in allPoints) {
+                    if (complementaryPoint in allPoints) {
                         minimumArea = getMinimumRectangleArea(minimumArea, vector, secondVector)
                     }
                 }
