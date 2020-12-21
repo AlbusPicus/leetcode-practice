@@ -1,6 +1,6 @@
 /**
- * Runtime: 296 ms, faster than 100.00% of Kotlin online submissions for Minimum Area Rectangle II.
- * Memory Usage: 37.9 MB, less than 100.00% of Kotlin online submissions for Minimum Area Rectangle II.
+ * Runtime: 252 ms, faster than 100.00% of Kotlin online submissions for Minimum Area Rectangle II.
+ * Memory Usage: 36.8 MB, less than 100.00% of Kotlin online submissions for Minimum Area Rectangle II.
  */
 class Solution {
     fun minAreaFreeRect(points: Array<IntArray>): Double {
