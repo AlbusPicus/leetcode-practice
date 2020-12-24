@@ -1,79 +1,56 @@
+/**
+ * Runtime: 476 ms, faster than 100.00% of Kotlin online submissions for Shortest Subarray to be Removed to Make Array Sorted.
+ * Memory Usage: 61.5 MB, less than 100.00% of Kotlin online submissions for Shortest Subarray to be Removed to Make Array Sorted.
+ */
 class Solution {
     fun findLengthOfShortestSubarray(arr: IntArray): Int {
         
-        // Direct Order
-        val stack = LinkedList<Int>() // non-decreasing numbers from beginning
-        stack.offerLast(arr[0])
+        val directOrderStack = LinkedList<Int>() // non-decreasing numbers from beginning
+        directOrderStack.offerLast(arr[0])
+        
+        val reversedOrderStack = LinkedList<Int>() // decreasing numbers from end
+        reversedOrderStack.offerLast(arr[arr.size - 1])
         var index = 1
-        while (index < arr.size && arr[index] >= stack.peekLast()) {
-            stack.offerLast(arr[index])
+        var addFromBeginning = true
+        var addFromEnd = true
+        while ((addFromBeginning || addFromEnd) && index < arr.size) {
+            if (addFromBeginning && arr[index] >= directOrderStack.peekLast()) {
+                directOrderStack.offerLast(arr[index])
+            } else {
+                addFromBeginning = false
+            }
+            
+            val reverseIndex = arr.size - index - 1
+            if (addFromEnd && arr[reverseIndex] <= reversedOrderStack.peekLast()) {
+                reversedOrderStack.offerLast(arr[reverseIndex])
+            } else {
+                addFromEnd = false
+            }
             index++
         }
-        var directOrderLength: Int = 0
-        var lastElement = stack.peekLast()
-        var potential = Int.MAX_VALUE
-        for (decreasingIndex in index until arr.size) {
-            val value = arr[decreasingIndex]
-            if (lastElement > value) {
-                potential = Int.MAX_VALUE
-                var skipSize = 0
-                val tempStack = LinkedList<Int>(stack)
-                while (tempStack.size > 0 && tempStack.pollLast() > value) {
-                    skipSize++
-                }
-                directOrderLength = skipSize + decreasingIndex - stack.size
-            } else if (potential == Int.MAX_VALUE) {
-                var skipSize = 0
-                val tempStack = LinkedList<Int>(stack)
-                while (tempStack.size > 0 && tempStack.pollLast() > value) {
-                    skipSize++
-                }
-                potential = skipSize + decreasingIndex - stack.size
-            }
-            lastElement = value
-        }
-        var stackOnlyCase = arr.size - stack.size
-        directOrderLength = Math.min(directOrderLength, potential)
-        directOrderLength = Math.min(directOrderLength, stackOnlyCase)
         
-        // Reverse Order
-        arr.reverse()
-        stack.clear()
-        stack.offerLast(arr[0])
-        index = 1
-        while (index < arr.size && arr[index] < stack.peekLast()) {
-            stack.offerLast(arr[index])
-            index++
+        return if (directOrderStack.size + reversedOrderStack.size > arr.size) {
+            0
+        } else {
+            arr.size - maxNonDecreasingSize(directOrderStack, reversedOrderStack)
         }
-        var reverseOrderLength = 0
-        potential = Int.MAX_VALUE
-        lastElement = stack.peekLast()
-        for (decreasingIndex in index until arr.size) {
-            val value = arr[decreasingIndex]
-            if (lastElement <= value) {
-                potential = Int.MAX_VALUE
-                var skipSize = 0
-                val tempStack = LinkedList<Int>(stack)
-                while (tempStack.size > 0 && tempStack.pollLast() <= value) {
-                    skipSize++
-                }
-                reverseOrderLength = skipSize + decreasingIndex - stack.size
-            } else if (potential == Int.MAX_VALUE) {
-                var skipSize = 0
-                val tempStack = LinkedList<Int>(stack)
-                while (tempStack.size > 0 && tempStack.pollLast() <= value) {
-                    skipSize++
-                }
-                potential = skipSize + decreasingIndex - stack.size
-            }
-            lastElement = value
+    }
+    
+    fun maxNonDecreasingSize(directOrderStack: LinkedList<Int>, reversedOrderStack: LinkedList<Int>): Int {
+        return if (directOrderStack.isEmpty() || reversedOrderStack.isEmpty() || directOrderStack.peekLast() <= reversedOrderStack.peekLast()) {
+            directOrderStack.size + reversedOrderStack.size
+        } else {
+            //TODO add memoization
+            val newDirectStack = LinkedList<Int>(directOrderStack)
+            newDirectStack.pollLast()
+            val removeFromLeft = maxNonDecreasingSize(newDirectStack, reversedOrderStack)
+            
+            val newReversedStack = LinkedList<Int>(reversedOrderStack)
+            newReversedStack.pollLast()
+            val removeFromRight = maxNonDecreasingSize(directOrderStack, newReversedStack)
+            
+            Math.max(removeFromLeft, removeFromRight)
         }
-        stackOnlyCase = arr.size - stack.size
-        reverseOrderLength = Math.min(reverseOrderLength, potential)
-        reverseOrderLength = Math.min(reverseOrderLength, stackOnlyCase)
-        
-        return Math.min(directOrderLength, reverseOrderLength)
-        
     }
     
 }
