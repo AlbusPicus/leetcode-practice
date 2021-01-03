@@ -1,6 +1,6 @@
 /**
- * Runtime: 160 ms, faster than 80.00% of Kotlin online submissions for Length of Last Word.
- * Memory Usage: 34.7 MB, less than 84.29% of Kotlin online submissions for Length of Last Word.
+ * Runtime: 144 ms, faster than 97.14% of Kotlin online submissions for Length of Last Word.
+ * Memory Usage: 35.3 MB, less than 67.14% of Kotlin online submissions for Length of Last Word.
  */
 class Solution {
     fun lengthOfLastWord(s: String): Int {
@@ -8,7 +8,7 @@ class Solution {
         var wordSize = 0
         var index = chars.size - 1
         
-        //escape trailing whitespace
+        //trim trailing whitespace
         while (index >= 0 && chars[index] == ' ') {
             index--
         }
