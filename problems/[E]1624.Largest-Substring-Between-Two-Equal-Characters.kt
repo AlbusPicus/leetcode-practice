@@ -1,6 +1,6 @@
 /**
- * Runtime: 148 ms, faster than 64.29% of Kotlin online submissions for Largest Substring Between Two Equal Characters.
- * Memory Usage: 33.4 MB, less than 85.71% of Kotlin online submissions for Largest Substring Between Two Equal Characters.
+ * Runtime: 116 ms, faster than 100.00% of Kotlin online submissions for Largest Substring Between Two Equal Characters.
+ * Memory Usage: 33.2 MB, less than 89.29% of Kotlin online submissions for Largest Substring Between Two Equal Characters.
  */
 class Solution {
     fun maxLengthBetweenEqualCharacters(s: String): Int {
