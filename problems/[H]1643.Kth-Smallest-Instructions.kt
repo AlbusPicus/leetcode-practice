@@ -11,12 +11,9 @@ class Solution {
         val size = VCount + HCount
         var index = 0
         
+        val symbols = CharArray(size) { ' '}
         
-        val symbols = CharArray(size) { i -> 
-            if (i < VCount) 'V' else 'H'
-        }
-        
-        while (index < size) {
+        while (HCount > 0 || VCount > 0) {
             firstV = 0
             var premutationsNumber = numberOfPremutations(VCount, HCount - firstV)
             while (firstV < HCount && premutationsNumber > target) {
@@ -33,34 +30,34 @@ class Solution {
                 symbols[i + index] = 'H'
                 HCount--
             }
-            
             symbols[firstV + index] = 'V'
             VCount--        
+            
             index += firstV + 1
             
-            
-            if (target == BigInteger.ZERO) {
-                for (i in 0 until VCount) {
-                    symbols[index + i] = 'V'
+            when {
+                target == BigInteger.ZERO -> {
+                    for (i in 0 until VCount) {
+                        symbols[index + i] = 'V'
+                    }
+                    for (i in index + VCount until size) {
+                        symbols[i] = 'H'
+                    }
+                    VCount = 0
+                    HCount = 0
+                } 
+                HCount == 0 -> {
+                    for (i in index until size) {
+                        symbols[i] = 'V'
+                    }
+                    VCount = 0
+                } 
+                VCount == 0 -> {
+                    for (i in index until size) {
+                        symbols[i] = 'H'
+                    }
+                    HCount = 0
                 }
-                for (i in index + VCount until size) {
-                    symbols[i] = 'H'
-                }
-                break
-            }
-            
-            if (HCount == 0) {
-                for (i in index until size) {
-                    symbols[i] = 'V'
-                }
-                break
-            }
-            
-            if (VCount == 0) {
-                for (i in index until size) {
-                    symbols[i] = 'H'
-                }
-                break
             }
         }
         
@@ -75,19 +72,5 @@ class Solution {
         var result = 1.toBigInteger()
         for (i in 2..n) result = result.multiply(i.toBigInteger())
         return result
-    }
-    
-    private fun restoreVUpToPosition(symbols: CharArray, position: Int): Int {
-        var VCount = 0
-        for (i in 0 .. position) {
-            if (symbols[i] == 'V') {
-                symbols[i] = 'H'
-                VCount++
-            }
-        }
-        for (i in 0 until VCount) {
-            symbols[i] = 'V'
-        }
-        return VCount
     }
 }
