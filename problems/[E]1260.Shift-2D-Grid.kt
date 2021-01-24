@@ -1,6 +1,6 @@
 /**
- * Runtime: 296 ms, faster than 66.67% of Kotlin online submissions for Shift 2D Grid.
- * Memory Usage: 47 MB, less than 33.33% of Kotlin online submissions for Shift 2D Grid.
+ * Runtime: 276 ms, faster than 100.00% of Kotlin online submissions for Shift 2D Grid.
+ * Memory Usage: 36.9 MB, less than 100.00% of Kotlin online submissions for Shift 2D Grid.
  */
 class Solution {
     fun shiftGrid(grid: Array<IntArray>, k: Int): List<List<Int>> {
