@@ -1,6 +1,6 @@
 /**
- * Runtime: 156 ms, faster than 91.13% of Kotlin online submissions for Merge Two Sorted Lists.
- * Memory Usage: 35 MB, less than 62.89% of Kotlin online submissions for Merge Two Sorted Lists.
+ * Runtime: 144 ms, faster than 99.79% of Kotlin online submissions for Merge Two Sorted Lists.
+ * Memory Usage: 35 MB, less than 91.75% of Kotlin online submissions for Merge Two Sorted Lists.
  */
 /**
  * Example:
