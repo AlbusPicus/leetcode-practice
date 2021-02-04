@@ -1,31 +1,33 @@
 /**
- * Runtime: 228 ms, faster than 43.96% of Kotlin online submissions for Roman to Integer.
- * Memory Usage: 37.3 MB, less than 29.30% of Kotlin online submissions for Roman to Integer.
+ * Runtime: 200 ms, faster than 82.42% of Kotlin online submissions for Roman to Integer.
+ * Memory Usage: 35.5 MB, less than 84.98% of Kotlin online submissions for Roman to Integer.
  */
 class Solution {
     fun romanToInt(s: String): Int {
         val chars = s.toCharArray()
         var result = 0
-        var index = 0
-        while (index < chars.size) {
-            val char = chars[index]
-            val exceptions = exceptionsMap.get(char)
-            if (exceptions != null && index + 1 < chars.size && chars[index + 1] in exceptions) {
-                result += conversionMap.getValue(chars[index + 1]) - conversionMap.getValue(char)
-                index += 2
+        var subtractionChar: Char? = null
+        for (i in chars.size - 1 downTo 0) {
+            val char = chars[i]
+            val value = conversionMap.getValue(char)
+            if (char == subtractionChar) {
+                result -= value
             } else {
-                result += conversionMap.getValue(char)
-                index += 1
+                result += value
             }
+            subtractionChar = subtractionMap[char]
         }
         return result
     }
     
     companion object {
-        private val exceptionsMap = mapOf(
-            'I' to setOf('V', 'X'),
-            'X' to setOf('L', 'C'),
-            'C' to setOf('D', 'M')
+         private val subtractionMap = mapOf(
+            'V' to 'I',
+            'X' to 'I',
+            'L' to 'X',
+            'C' to 'X',
+            'D' to 'C',
+            'M' to 'C'
         )
         private val conversionMap = mapOf(
             'I' to 1,
