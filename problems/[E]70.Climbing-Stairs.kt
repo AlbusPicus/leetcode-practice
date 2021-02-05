@@ -1,6 +1,6 @@
 /**
- * Runtime: 128 ms, faster than 58.08% of Kotlin online submissions for Climbing Stairs.
- * Memory Usage: 32.8 MB, less than 43.64% of Kotlin online submissions for Climbing Stairs.
+ * Runtime: 120 ms, faster than 84.19% of Kotlin online submissions for Climbing Stairs.
+ * Memory Usage: 33.2 MB, less than 32.65% of Kotlin online submissions for Climbing Stairs.
  */
 class Solution {
     fun climbStairs(n: Int): Int {
