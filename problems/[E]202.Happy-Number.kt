@@ -1,6 +1,6 @@
 /**
- * Runtime: 156 ms, faster than 57.01% of Kotlin online submissions for Happy Number.
- * Memory Usage: 33.9 MB, less than 46.73% of Kotlin online submissions for Happy Number.
+ * Runtime: 148 ms, faster than 63.55% of Kotlin online submissions for Happy Number.
+ * Memory Usage: 33.2 MB, less than 81.31% of Kotlin online submissions for Happy Number.
  */
 class Solution {
     fun isHappy(n: Int): Boolean {
