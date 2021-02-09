@@ -1,6 +1,6 @@
 /**
  * Runtime: 2284 ms, faster than 33.82% of Kotlin online submissions for Divide Two Integers.
- * Memory Usage: 33.5 MB, less than 45.59% of Kotlin online submissions for Divide Two Integers.
+ * Memory Usage: 33.4 MB, less than 60.29% of Kotlin online submissions for Divide Two Integers.
  */
 class Solution {
     fun divide(dividend: Int, divisor: Int): Int {
