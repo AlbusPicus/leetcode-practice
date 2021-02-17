@@ -1,6 +1,6 @@
 /**
- * Runtime: 180 ms, faster than 44.34% of Kotlin online submissions for Find Peak Element.
- * Memory Usage: 38.1 MB, less than 18.87% of Kotlin online submissions for Find Peak Element.
+ * Runtime: 172 ms, faster than 71.70% of Kotlin online submissions for Find Peak Element.
+ * Memory Usage: 37.3 MB, less than 31.13% of Kotlin online submissions for Find Peak Element.
  */
 class Solution {
     fun findPeakElement(nums: IntArray): Int {
