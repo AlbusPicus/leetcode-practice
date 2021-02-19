@@ -1,5 +1,5 @@
 /**
- * Runtime: 184 ms, faster than 85.37% of Kotlin online submissions for Rotate Array.
+ * Runtime: 180 ms, faster than 89.76% of Kotlin online submissions for Rotate Array.
  * Memory Usage: 36.5 MB, less than 61.95% of Kotlin online submissions for Rotate Array.
  */
 class Solution {
