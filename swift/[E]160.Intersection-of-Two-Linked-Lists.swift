@@ -1,6 +1,6 @@
 /**
- * Runtime: 288 ms, faster than 41.85% of Swift online submissions for Intersection of Two Linked Lists.
- * Memory Usage: 17 MB, less than 77.17% of Swift online submissions for Intersection of Two Linked Lists.
+ * Runtime: 280 ms, faster than 61.96% of Swift online submissions for Intersection of Two Linked Lists.
+ * Memory Usage: 16.8 MB, less than 94.02% of Swift online submissions for Intersection of Two Linked Lists.
  */
 /**
  * Definition for singly-linked list.
