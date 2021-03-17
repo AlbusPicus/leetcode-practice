@@ -1,6 +1,6 @@
 class Solution {
     fun solveNQueens(n: Int): List<List<String>> {
-        return placeQueens(n, 0, emptySet<Int>(), emptySet<Int>(), emptySet<Int>())
+        return placeQueens(n, 0, emptySet(), emptySet(), emptySet())
     }
     
     fun placeQueens(
