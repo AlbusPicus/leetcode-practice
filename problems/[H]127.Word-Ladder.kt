@@ -1,6 +1,6 @@
 /**
- * Runtime: 320 ms, faster than 80.88% of Kotlin online submissions for Word Ladder.
- * Memory Usage: 37.8 MB, less than 92.65% of Kotlin online submissions for Word Ladder.
+ * Runtime: 320 ms, faster than 80.88% of Kotlin online submissions for Word Ladder
+ * Memory Usage: 37.8 MB, less than 92.65% of Kotlin online submissions for Word Ladder
  */
 class Solution {
     fun ladderLength(beginWord: String, endWord: String, wordList: List<String>): Int {
