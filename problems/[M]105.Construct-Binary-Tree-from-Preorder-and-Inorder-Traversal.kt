@@ -1,4 +1,8 @@
 /**
+ * Runtime: 172 ms, faster than 96.70% of Kotlin online submissions for Construct Binary Tree from Preorder and Inorder Traversal.
+ * Memory Usage: 35.2 MB, less than 95.60% of Kotlin online submissions for Construct Binary Tree from Preorder and Inorder Traversal.
+ */
+/**
  * Example:
  * var ti = TreeNode(5)
  * var v = ti.`val`
@@ -15,28 +19,27 @@ class Solution {
             inorderIndexMap.put(inorder[i], i)
         }
 
-        return buildTree(preorder, inorder, 0, preorder.size - 1, 0, inorderIndexMap)
+        return buildTree(preorder, inorder, 0, preorder.size - 1, 0, inorderIndexMap).first
     }
     
-    private fun buildTree(preorder: IntArray, inorder: IntArray, left: Int, right: Int, preorderIndex: Int, inorderIndexMap: Map<Int, Int>): TreeNode? {
-        var preIndex = preorderIndex
-        if (left > right) return null
+    private fun buildTree(preorder: IntArray, inorder: IntArray, left: Int, right: Int, preorderIndex: Int, inorderIndexMap: Map<Int, Int>): Pair<TreeNode?, Int> {
+        if (left > right) return null to 0
 
-        val rootValue = preorder[preIndex]
+        val rootValue = preorder[preorderIndex]
         val root = TreeNode(rootValue)
-        preIndex++
-        
+
+        var preIncrement = 1
         val leftSubtreeEndIndex = inorderIndexMap[rootValue]!! - 1
-        buildTree(preorder, inorder, left, leftSubtreeEndIndex, preIndex, inorderIndexMap)?.let {
-            root.left = it
-            preIndex++
+        buildTree(preorder, inorder, left, leftSubtreeEndIndex, preorderIndex + preIncrement, inorderIndexMap)?.let {
+            root.left = it.first
+            preIncrement += it.second
         }
-        
         val rightSubtreeStartIndex = inorderIndexMap[rootValue]!! + 1
-        buildTree(preorder, inorder, rightSubtreeStartIndex, right, preIndex, inorderIndexMap)?.let {
-            root.right = it
+        buildTree(preorder, inorder, rightSubtreeStartIndex, right, preorderIndex + preIncrement, inorderIndexMap)?.let {
+            root.right = it.first
+            preIncrement += it.second
         }
-        return root
+        return root to preIncrement
     }
     
 }
